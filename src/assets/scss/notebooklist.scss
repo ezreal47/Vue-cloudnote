@@ -1,0 +1,89 @@
+#notebooks {
+  flex: 1;
+  min-width: 400px;
+  margin-left: 56px;
+  header {
+    border-bottom: 1px solid #bbb;
+    padding: 12px 32px;;
+    .add {
+      &:hover {color: #fff; background-color: #9ddcdc; .icon-plus { fill: #fff}}
+      color: #555;
+      display: flex;
+      width: 100px;
+      border-radius: 30px;
+      padding: 5px;
+      background-color: #fff;
+      border: 1px solid #9ddcdc;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+      transition: all 0.2s;
+      &:focus {outline: none}
+      .icon-plus {
+        width: 18px;
+        height: 18px;
+        fill: #9ddcdc;
+      }
+    }
+    span {
+      margin-left: 2px;
+    }
+  }
+  main {
+    .notebook-wrapper {
+      max-width: 900px;
+      margin: 0 auto;
+      margin-top: 30px;
+      h3 {
+        font-size: 12px;
+        color: #000;
+        padding-bottom: 10px;
+      }
+      .notebook-list {
+        border-radius: 2px;
+        background: #fff;
+        margin-bottom: 50px;
+        .item {
+          transition: all 0.2s;
+          &:hover {background-color:rgba(203,241,245,0.5);}
+          font-size: 12px;
+          border-bottom: 1px solid #b3c0c8;
+          &:last-child {border: none;} 
+          .notebook {
+            &:focus {outline: none}
+            display: flex;
+            padding: 16px;
+            justify-content: space-between;
+            color: #666;
+            vertical-align: baseline;
+            .left-message {
+              display: flex;
+              align-items: center;
+              line-height: 16px;
+              color: #222;
+              font-weight: bold;
+              .note-num {
+                color: #666;
+                font-weight: normal;
+                margin-left: 2px;
+              }
+            }
+            .right-message {
+              font-weight: 600;
+              color: #b3c0c8;
+              span {
+                margin-right: 4px;
+              }
+            }
+            .icon-notebook {
+              width: 16px;
+              height: 16px;
+              fill: #666;
+              margin-right: 10px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

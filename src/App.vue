@@ -18,6 +18,8 @@ export default {
 </script>
 
 <style>
+ .el-message {min-width: 240px;}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -26,7 +28,6 @@ export default {
 html,body, #app {
   height: 100%;
   width: 100%;
-  background-color: #eee;
 }
 
 a {
@@ -39,8 +40,7 @@ ul, li {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 14px;
   -moz-osx-font-smoothing: grayscale;  
-  background-color: #eee;
-  /*background-color: #f7f7f5;*/
+  background-color: #f4f4f4;
 }
 #app {
   display: flex;

@@ -13,7 +13,7 @@
         <h3>笔记本列表({{notebooks.length}})</h3>
         <ul class="notebook-list">
           <li class="item" v-for="(notebook,index) in notebooks" :key="notebook.id"> 
-            <a href="" class="notebook">
+            <router-link :to="`/note/?notebookId=${notebook.id}`" class="notebook">
               <div class="left-message">
                 <svg class="icon-notebook">
                   <use xlink:href="#icon-notebook2"></use>
@@ -26,7 +26,7 @@
                 <span class="action" @click.stop.prevent="onDelete(notebook,index)">删除</span>
                 <span class="action" @click.stop.prevent="onEdit(notebook,index)">编辑</span>
               </div>
-            </a>
+            </router-link>
           </li>
         </ul>
       </div>
@@ -35,59 +35,62 @@
 </template>
 
 <script>
-import Auth from '@/api/auth'
-import Notebooks from '@/api/notebooks'
-import tranformTime from '@/helpers/util'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
-  data () {
-    return {
-      msg: '笔记本列表',
-      notebooks: []
-    }
+  data() {
+    return {}
   },
 
   created() {
-    Auth.getInfo()
-      .then(res => {
-        if(!res.isLogin){
-          this.$router.push({path:'/login'})
-        }
-      })
-
-    Notebooks.getLIST()
-      .then(res => {
-        this.notebooks = res.data
-        this.notebooks.reverse();
-      })  
+    this.checkLogin({ path: '/login' })
+    this.$store.dispatch('getNotebooks')
   },
+
+  computed: {
+    ...mapGetters(['notebooks'])
+  },
+
   methods: {
+    ...mapActions([
+      'getNotebooks',
+      'addNotebook',
+      'updateNotebook',
+      'deleteNotebook',
+      'checkLogin'
+    ]),
+
     onCreate() {
-      let title = window.prompt('创建笔记本')
-      if(title.trim() === '') {
-        alert('不能为空')
-        return
-      }
-      Notebooks.addNotebook({ title })
-        .then(res => {
-          this.notebooks.unshift(res.data)
-          res.data.newCreatedAt = tranformTime(res.data.createdAt)
-        })
+      this.$prompt('请输入笔记本标题', '新建笔记本', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{1,30}$/,
+        inputErrorMessage: '笔记本标题不能为空且不能超过20个字符'
+      }).then(({ value }) => {
+        this.addNotebook({ title: value })
+      })
     },
-    onEdit(notebook,index) {
+    onEdit(notebook, index) {
       let id = this.notebooks[index].id
-      let title = window.prompt('修改标题',notebook.title)
-      Notebooks.updateNotebook(id,{title})
-        .then(res => {
-          notebook.title = title
-        })
+      this.$prompt('请输入新的笔记本标题', '', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        inputPattern: /^.{1,30}$/,
+        inputValue: notebook.title,
+        inputErrorMessage: '笔记本标题不能为空且不能超过20个字符'
+      }).then(({ value }) => {
+        this.updateNotebook({ notebookId: id, title: value })
+      })
     },
-    onDelete(notebook,index) {
+    onDelete(notebook, index) {
       let id = this.notebooks[index].id
-      Notebooks.deleteNotebook(id)
-        .then(res => {
-          this.notebooks.splice(index,1)
-        })
+      this.$confirm('是否删除当前笔记本?', '', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.deleteNotebook({ notebookId: id })
+      })
     }
   }
 }
@@ -95,87 +98,6 @@ export default {
 
 <style scoped lang="scss">
 
-#notebooks {
-  flex: 1;
-  header {
-    border-bottom: 1px solid #bbb;
-    padding: 12px;
-    .add {
-      color: #555;
-      display: flex;
-      width: 100px;
-      border-radius: 30px;
-      padding: 5px;
-      background-color: #fff;
-      border: 1px solid;
-      justify-content: center;
-      align-items: center;
-      font-size: 12px;
-      .icon-plus {
-        width: 18px;
-        height: 18px;
-        fill: #666;
-      }
-    }
-    span {
-      margin-left: 2px;
-    }
-  }
-  main {
-    .notebook-wrapper {
-      max-width: 900px;
-      margin: 0 auto;
-      margin-top: 30px;
-      h3 {
-        font-size: 12px;
-        color: #000;
-        padding-bottom: 10px;
-      }
-      .notebook-list {
-        // padding: 10px;
-        border-radius: 2px;
-        background-color: #fff;
-        margin-bottom: 50px;
-        .item {
-          font-size: 12px;
-          padding: 16px;
-          border-bottom: 1px solid #b3c0c8;
-          &:last-child {border: none;} 
-          .notebook {
-            display: flex;
-            justify-content: space-between;
-            color: #666;
-            vertical-align: baseline;
-            .left-message {
-              display: flex;
-              align-items: center;
-              line-height: 16px;
-              color: #222;
-              font-weight: bold;
-              .note-num {
-                color: #666;
-                font-weight: normal;
-                margin-left: 2px;
-              }
-            }
-            .right-message {
-              font-weight: 600;
-              color: #b3c0c8;
-              span {
-                margin-right: 4px;
-              }
-            }
-            .icon-notebook {
-              width: 16px;
-              height: 16px;
-              fill: #666;
-              margin-right: 10px;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+@import '../assets/scss/notebooklist.scss';
 
 </style>

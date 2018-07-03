@@ -1,5 +1,5 @@
 import request from '@/helpers/request'
-import transformTime from '@/helpers/util'
+import Time from '@/helpers/util'
 
 const URL = {
   GET: '/notebooks',
@@ -10,13 +10,12 @@ const URL = {
 
 export default {
   getLIST() {
-    // return request(URL.GET)
-    return new Promise((resolve,reject)=>{
+    return new Promise((resolve, reject) => {
       request(URL.GET)
         .then(res => {
-          res.data = res.data.sort((book1,book2)=>{book1.createdAt < book2.createdAt})
+          res.data = res.data.sort((book1, book2) => { book1.createdAt < book2.createdAt })
           res.data.forEach(currentbook => {
-            currentbook.newCreatedAt = transformTime(currentbook.createdAt)
+            currentbook.newCreatedAt = Time.transformTime(currentbook.createdAt)
           })
           resolve(res)
         }).catch(err => {
@@ -24,13 +23,21 @@ export default {
         })
     })
   },
-  updateNotebook(notebookId,{ title = "" } = {title : ""}){
-    return request(URL.UPDATE.replace(':id',notebookId),'PATCH',{ title })
+  updateNotebook(notebookId, { title = "" } = { title: "" }) {
+    return request(URL.UPDATE.replace(':id', notebookId), 'PATCH', { title })
   },
-  deleteNotebook(notebookId){
-    return request(URL.DELETE.replace(':id',notebookId),'DELETE')
+  deleteNotebook(notebookId) {
+    return request(URL.DELETE.replace(':id', notebookId), 'DELETE')
   },
-  addNotebook({ title = ''} = { title : '' }){
-    return request(URL.ADD,'POST',{ title })
+  addNotebook({ title = '' } = { title: '' }) {
+    return new Promise((resolve, reject) => {
+      request(URL.ADD, 'POST', { title })
+        .then(res => {
+          res.data.newCreatedAt = Time.transformTime(res.data.createdAt)
+          resolve(res)
+        }).catch(err => {
+          reject(err)
+        })
+    })
   }
 }

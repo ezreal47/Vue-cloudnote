@@ -1,0 +1,77 @@
+#trash-detail {
+   background-color: #fff;
+   display: flex;
+   width: 100%;
+   flex: 1;
+   margin-left: 56px;
+   .note-aside {
+     border-right: 1px solid #e0e1e5;
+     width: 320px;
+     flex-shrink: 0;
+     h2 {
+       font-size: 18px;
+       text-align: center;
+       padding: 14px 0;
+       border-bottom: 1px solid #e0e1e5;
+     }
+     .note-list {
+       .note-item {
+         &:hover {
+           background-color: rgba(238, 240, 247, 0.5);
+           .note-title .icon-wrapper .icon {display: block}
+         }
+         border-bottom: 1px solid #e0e1e5;
+         padding: 20px 24px;
+         .note-title {
+           color: #393939;
+           padding-bottom: 6px;
+           display: flex;
+           justify-content: space-between;
+           line-height: 22px;
+           .icon-wrapper {
+             display: flex;
+             .icon {
+               display: none;
+               &:hover {fill: #5c9df4}
+               width: 22px;
+               height: 22px;
+               fill: #b4d8df;
+               margin-right: 2px;
+             }
+           }
+         }
+         .createdate {
+           font-size: 12px;
+           color: #82828c;
+         }
+       }
+     }
+   }
+   .note-detail {
+     flex: 1;
+     min-width: 400px;
+     background-color: #fff;
+     .notedetail-title {
+       border-bottom: 1px solid #e0e1e5;
+       font-size: 20px;
+       padding: 10px 30px;
+       color: #444;
+       display: flex;
+       justify-content: space-between;
+       .icon-wrapper {
+         display: flex;
+         justify-content: space-between;
+       }
+       .icon {
+         &:hover {fill: #5c9df4; cursor: pointer}
+         margin-right: 6px;
+         width: 28px;
+         height: 28px;
+         fill: #b4d8df;
+       }
+     }
+     .notedetail-content {
+       padding: 30px;
+     }
+   }
+ }

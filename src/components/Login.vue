@@ -1,5 +1,12 @@
 <template>
   <div id="login">
+    <div class="Tip" v-if="Tip">
+      <svg class="Tip-icon"><use xlink:href="#icon-tip"></use></svg>
+      <p>测试账号:test1 &nbsp&nbsp&nbsp&nbsp  密码:123456</p>
+      <div class="closeTip" @click="Tip = false">
+        <svg class="closeTip-icon"><use xlink:href="#icon-close"></use></svg>
+      </div>
+    </div>
     <div class="modal-mask">
       <div class="modal-container">
         <div class="main"></div>
@@ -65,13 +72,8 @@
 </template>
 
 <script>
-import Auth from '@/api/auth'
-import Bus from '@/helpers/bus'
-
-  Auth.getInfo()
-    .then(data => {
-      console.log(data)
-    })
+import {  mapGetters , mapActions } from 'vuex'
+import { Message } from 'element-ui'
 
 export default {
   name: 'Login',
@@ -79,6 +81,7 @@ export default {
     return {
       isShowLogin: true,
       isShowSignup:false,
+      Tip: true,
       login: {
         username: '',
         password: '',
@@ -96,6 +99,11 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      longinVuex: 'login',
+      signupVuex: 'signup',
+
+    }),
     showLogin(){
       this.isShowSignup = false
       this.isShowLogin = true
@@ -110,8 +118,6 @@ export default {
     },
     onLogin(){
       if(!/^[\w]{3,16}$/.test(this.login.username)){
-        console.log('用户名必须是字母,数字或者下划线,3-16位')
-        console.log(this.login.username)
         this.login.isError = true
         this.login.notice = '用户名3~15个字符，仅限于字母数字下划线中文'
         return
@@ -124,13 +130,11 @@ export default {
       this.login.isError = false
       this.login.notice = ''
       
-      Auth.login({username:this.login.username, password:this.login.password})
-        .then(data => {
-          console.log(data)
-          Bus.$emit('userInfo',{username: this.login.username})
+      this.longinVuex({username:this.login.username, password:this.login.password})
+        .then(() => {
           this.$router.push({path:'notebooks'})
+          Message.success({message:'登录成功',center:true,duration:2000})
         }).catch(data => {
-          console.log(data)
           this.login.isError = true
           this.login.notice = data.msg
         })
@@ -151,143 +155,21 @@ export default {
       this.signup.isError = false
       this.signup.notice = ''
 
-      Auth.signup({username:this.signup.username, password:this.signup.password})
-        .then(data => {
-          console.log(data)
-           Bus.$emit('userInfo',{username: this.signup.username})
-          this.$router.push({path: 'notebooks'})
+      this.signupVuex({username:this.signup.username, password:this.signup.password})
+        .then(() => {
+           this.$router.push({path: 'notebooks'})
+           Message.success({message:'注册成功',center:true,duration:2000})
         }).catch(data => {
-          console.log(data)
           this.signup.isError = true
           this.signup.notice = data.msg
         })
-
     }
   }
 }
 </script>
 
 <style  lang="scss" scoped>
-.modal-mask {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, .6);
-  color: #fff;
-}
-.modal-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%,-50%);
-  width: 70vw;
-  height: 70vh;
-  display: flex;
-  border-radius: 10px;
-  overflow: hidden;
-  background: #273339;
-  .main {
-    flex: 1;
-    background: #232c33 url('//p9fqeuw7k.bkt.clouddn.com/notebook1.jpg') center no-repeat;
-    background-size: contain;
-  }
-  .form-wrapper{
-    width: 280px;
-    background: linear-gradient(#1b2029,#1e252c,#222b32,#2c3a41);
-    .head {
-      padding-top: 20px;
-      text-align: center;
-      .icon-head {
-        width: 50px;
-        height: 50px;
-      }
-      h2 {
-        margin-top: 6px;
-      }
-      p {
-        font-size: 12px;
-      }
-    }
-    .form {
-      .tab {
-        margin-top: 60px;
-        display: flex;
-        justify-content: space-around;
-        .bt-tab  {
-          color: #787a87;
-          cursor: pointer;
-          &.active {
-            border-bottom: 2px solid #ff6567;
-            padding-bottom: 3px;
-            color: #fff;
-          }
-        }
-      }
-      .signin, .register {
-        position: relative;
-        margin-top: 50px;
-        .iconfont {
-          width: 20px;
-          height: 20px;
-          fill: #fff;
-          margin-right: 16px;
-        }
-        .input-wrapper {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-top: 16px;
-          input {
-            outline: none;
-            border-radius: 4px;
-          }
-        }
-        
-        .tip {
-          width: 180px;
-          left: 50%;
-          top: 70px;
-          text-align: center;
-          transform: translateX(-50%);
-          position: absolute;
-          color: #ddd;
-          font-size: 12px;
-          &.error {
-            color: red;
-          }
-        }
-      }
-      .button {
-        width: 210px;
-        height: 35px;
-        line-height: 35px;
-        border-radius: 20px;
-        margin:  0 auto;
-        margin-top: 80px;
-        background: #ff6567;
-        text-align: center;
-        cursor: pointer;
-        font-weight: bold;
-      }
-    }
-    .nice-enter-active {
-      transition: all .8s ease;
-    }
-    // .nice-leave-active {
-    //   transition: all 3s cubic-bezier(1.0, 0.5, 0.8, 1.0);
-    // }
-    .nice-enter {
-      transform: translateX(100px);
-      opacity: 0;
-    }
-    // .nice-leave-to{
-    //   color: red;
-    //   transform: translateX(100px);
-    //   opacity: 0;
-    // } 
-  }
-}
+
+@import '../assets/scss/login.scss';
 
 </style>

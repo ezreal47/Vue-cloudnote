@@ -5,25 +5,27 @@
 </template>
 
 <script>
-import Auth from '@/api/auth'
-import Bus from '@/helpers/bus'
+import {mapGetters ,mapActions,mapMutations } from 'vuex'
 
 export default {
   data() {
-    return {
-      username: ''
-    }
+    return {}
+  },
+  computed: {
+    ...mapGetters([
+      'username'
+    ])
+  },
+  methods: {
+    ...mapMutations([
+      'setUser'
+    ]),
+    ...mapActions([
+      'checkLogin'
+    ])
   },
   created() {
-    Bus.$on('userInfo',user => {
-      this.username = user.username
-    }) 
-    Auth.getInfo()
-      .then(res => {
-        if(res.isLogin){
-          this.username = res.data.username
-        }
-      })
+    this.checkLogin() 
   }
 }
 </script>
