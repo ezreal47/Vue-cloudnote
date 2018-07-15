@@ -32,7 +32,6 @@ const mutations = {
   },
 
   deleteNote(state,payload) {
-    console.log(payload.noteId)
     state.notes = state.notes.filter(note => {return note.id !== payload.noteId})
   },
   setCurrentnote(state,payload = {}) {
@@ -67,7 +66,6 @@ const actions = {
   return  Note.deleteNote({noteId})
       .then(res => {
         commit('deleteNote',{noteId})
-        console.log(noteId)
         Message.info({message:res.msg,center:true,duration:2000})
       })
   }

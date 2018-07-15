@@ -43,7 +43,7 @@ export default {
   },
 
   created() {
-    this.checkLogin({ path: '/login' })
+    this.checkLogin()
     this.$store.dispatch('getNotebooks')
   },
 
@@ -61,23 +61,25 @@ export default {
     ]),
 
     onCreate() {
-      this.$prompt('请输入笔记本标题', '新建笔记本', {
+      this.$prompt('', '请输入笔记本标题', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^.{1,30}$/,
-        inputErrorMessage: '笔记本标题不能为空且不能超过20个字符'
+        inputErrorMessage: '笔记本标题不能为空且不能超过20个字符',
+        customClass: 'EUaddnote'
       }).then(({ value }) => {
         this.addNotebook({ title: value })
       })
     },
     onEdit(notebook, index) {
       let id = this.notebooks[index].id
-      this.$prompt('请输入新的笔记本标题', '', {
+      this.$prompt('', '请输入新的笔记本标题', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         inputPattern: /^.{1,30}$/,
         inputValue: notebook.title,
-        inputErrorMessage: '笔记本标题不能为空且不能超过20个字符'
+        inputErrorMessage: '笔记本标题不能为空且不能超过20个字符',
+        customClass: 'EUeditnote'
       }).then(({ value }) => {
         this.updateNotebook({ notebookId: id, title: value })
       })
@@ -99,5 +101,35 @@ export default {
 <style scoped lang="scss">
 
 @import '../assets/scss/notebooklist.scss';
+
+</style>
+
+<style lang="scss">
+  .EUaddnote {
+    .el-message-box__header {
+      color: #606266;
+      .el-message-box__title {
+        color: #606266;
+        font-size: 16px;
+      }
+    }
+    .el-message-box__message {
+      padding: 0px;
+    }
+    .el-message-box__content {
+      padding-top: 0;
+    }
+  }
+ .EUeditnote {
+  .el-message-box__header {
+    .el-message-box__title {
+        color: #606266;
+        font-size: 16px;
+    }
+  }
+  .el-message-box__content {
+    padding-top: 0;
+  }
+ } 
 
 </style>

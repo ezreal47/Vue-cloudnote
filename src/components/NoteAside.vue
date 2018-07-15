@@ -36,9 +36,6 @@
 </template>
 
 <script>
-import Notebooks from '@/api/notebooks'
-import Notes from '@/api/notes'
-import BUS from '@/helpers/bus'
 import { mapState, mapGetters, mapMutations, mapActions } from 'vuex'
 
 

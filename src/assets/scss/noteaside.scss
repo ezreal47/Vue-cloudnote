@@ -3,7 +3,7 @@
   border-right: 1px solid #e0e1e5;
   height: 100%;
   flex-shrink: 0;
-  margin-left: 56px;
+  margin-left: 115px;
   .aside-head {
     text-align: center;
     border-bottom: 1px solid #e0e1e5;
@@ -34,8 +34,7 @@
       margin-right: 10px;
       flex-shrink: 0;
       &:hover {
-        background-color: #eaf0fb;
-        color: #606266
+        background-color: lighten(#5c9df4, 10%);
       }
     }
   }

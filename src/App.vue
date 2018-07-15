@@ -40,7 +40,8 @@ ul, li {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   font-size: 14px;
   -moz-osx-font-smoothing: grayscale;  
-  background-color: #f4f4f4;
+  /*background-color: #f4f4f4;*/
+  background-color: #f2f6fc;
 }
 #app {
   display: flex;

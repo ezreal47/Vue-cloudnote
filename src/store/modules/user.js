@@ -30,12 +30,12 @@ const actions = {
       }) 
   },
 
-  checkLogin({commit,state},payload = {}) {
+  checkLogin({commit,state}) {
     if(state.user !== null) return Promise.resolve()
     return Auth.getInfo()
       .then(res => {
         if (!res.isLogin) {
-          router.push(payload)
+          router.push({ path: '/login'})
         } else {
           commit('setUser',{user: res.data})
         }

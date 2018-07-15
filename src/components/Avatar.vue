@@ -1,7 +1,8 @@
 <template>
-  <span :title="username">
+  <div :title="username" class="symbol">
     <svg class="avatar"><use xlink:href="#icon-icon-test"></use></svg>
-  </span>
+    <div class="title">CloudNote</div>
+  </div>
 </template>
 
 <script>
@@ -31,10 +32,17 @@ export default {
 </script>
 
 <style scoped>
+  .symbol {
+    margin-top: 20px;
+  }
   .avatar {
-    width: 40px;
-    height: 40px;
-    margin-top: 15px;
+    width: 46px;
+    height: 46px;
   }
 
+  .title {
+    color: #fff;
+    letter-spacing: 1px;
+    font-weight: bolder;
+  }
 </style>

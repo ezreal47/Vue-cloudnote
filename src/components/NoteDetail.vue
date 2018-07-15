@@ -17,7 +17,6 @@
             <svg class="icon-preview" @click="isPreview = !isPreview"><use xlink:href="#icon-preview"></use></svg>
           </span>
           <span title="删除笔记">
-            <!--<svg class="icon-deletenote" @click="onDeleteNote"><use xlink:href="#icon-delete"></use></svg>-->
             <svg class="icon-deletenote" @click="onDeleteNote"><use xlink:href="#icon-trashcan"></use></svg>
           </span>
         </div> 
@@ -43,7 +42,6 @@ import MarkdownIt from 'markdown-it'
 import { mapState, mapGetters, mapMutaions, mapActions } from 'vuex'
 
 let md = new MarkdownIt();
-let result = md.render('# markdown-it rulezz!');
 
 export default {
   components: {
@@ -114,7 +112,7 @@ export default {
 }
 </script>
 
-<style scoped lang="scss"> 
+<style lang="scss"> 
 
 @import '../assets/scss/notedetail.scss';
 

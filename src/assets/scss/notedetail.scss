@@ -5,7 +5,6 @@
   font-size: 12px;
   min-width: 800px;
 }
-
 .note-content {
   width: 100%;
   display: flex;
@@ -16,7 +15,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 8px 16px;
+    padding: 10px 16px;
     border-bottom: 2px solid #e0e1e5;
     .update {margin-left: 12px;margin-right: 12px;}
     .icon {
@@ -27,47 +26,93 @@
         width: 20px;
         height: 20px;
         margin-right: 10px;
-        fill: #b4d8df;
-        transition: all .2s;
-        &:hover {fill: #5c9df4}
+        fill: #0095ff;
+        transition:all 0.2s;
+        &:hover {transform: scale(1.2)}
       }
       .icon-deletenote {
         width: 24px;
         height: 24px;
-        fill: #b4d8df;
+        fill: #0095ff;
         transition:all 0.2s;
-        &:hover {fill: #5c9df4}
+        &:hover {transform: scale(1.2)}
       }
     }
   }
+  .note-title {margin-top: 10px;}
   .note-title input {
     border: none;
     outline: none;
-    font-size: 18px;
-    font-weight: 500;
-    color: #111;
+    font-size: 22px;
+    font-weight: 400;
+    color: #606266;;
     width: 100%;
-    padding: 12px 20px 8px 20px;
+    padding: 12px 0px 20px 30px;
   }
-  .preview {padding: 20px; }
+  .preview {
+    color: #606266;
+    font-size: 22px; 
+    font-weight: 400;
+    padding: 12px 20px 0px 30px; 
+  }
+  
   .editor {
     position: relative;
     flex: 1;
+
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 100px;
+      background-color: #F5F5F5;
+    }
+    /*定义滚动条轨道 内阴影+圆角*/
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+      border-radius: 10px;
+      background-color: #F5F5F5;
+    }
+    /*定义滑块 内阴影+圆角*/
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+      background-color: #555;
+    }
+
     textarea {
       border: none;
       resize: none;
       outline: none;
       width: 100%;
       height: 100%;
-      font-size: 14px;
-      padding: 20px;
+      font-size: 16px;
+      padding: 0px 30px;
       position: absolute;
+      color: #909399;
+      line-height: 1.5;
+      font-family: "Microsoft YaHei","微软雅黑",Arial,sans-serif;
     }
     .preview {
-      padding: 20px;
+      padding: 20px 30px;
       position: absolute;
       width: 100%;
       height: 100%;
+      font-size: 16px; 
+      pre {
+        background: #EBEEF5;
+        padding: 10px;
+        border-radius: 10px;
+        font-size: 24px;
+          code {
+            font-size: 16px;
+            color: 	#6495ED;
+            line-height: 1.2;
+            font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
+          }
+      }
+      ul,li,ol {
+        list-style-type: disc;
+        padding: 8px 1px;
+      }
     }
   }
 }

@@ -1,7 +1,7 @@
 #notebooks {
   flex: 1;
   min-width: 400px;
-  margin-left: 56px;
+  margin-left: 115px;
   header {
     border-bottom: 1px solid #bbb;
     padding: 12px 32px;;
@@ -45,7 +45,7 @@
         margin-bottom: 50px;
         .item {
           transition: all 0.2s;
-          &:hover {background-color:rgba(203,241,245,0.5);}
+          &:hover {background-color:rgba(203,241,245,0.8);}
           font-size: 12px;
           border-bottom: 1px solid #b3c0c8;
           &:last-child {border: none;} 
