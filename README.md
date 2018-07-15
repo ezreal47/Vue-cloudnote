@@ -1,4 +1,4 @@
-# vue-cloudnote
+## vue-cloudnote
 
 > 使用Vue.js做的一款云笔记
 
