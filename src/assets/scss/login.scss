@@ -54,7 +54,8 @@
   background: #273339;
   .main {
     flex: 1;
-    background: #232c33 url('http://p9fqeuw7k.bkt.clouddn.com/notebook1.jpg') center no-repeat;
+    background: #232c33  center no-repeat;
+    background-image: url('../assets/images/notebook-bg.jpg');
     background-size: contain;
   }
   .form-wrapper{

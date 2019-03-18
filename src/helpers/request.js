@@ -11,7 +11,7 @@ export default function request(url, type = 'GET', data = {}) {
       url,
       method: type,
       validateStatus(status) {
-        return (status >= 200 && status < 300 || status === 400)
+         return (status >= 200 && status < 300 || status === 400)
       }
     }
     if (type.toLowerCase() === 'get') {
@@ -19,6 +19,8 @@ export default function request(url, type = 'GET', data = {}) {
     } else {
       option.data = data
     }
+
+
     axios(option).then(res => {
       if (res.status === 200) {
         resolve(res.data)
@@ -30,7 +32,7 @@ export default function request(url, type = 'GET', data = {}) {
         reject(res.data)
       }
     }).catch(err => {
-      Message.error('网络异常')
+      Message.error('网络异常啊')
       reject({ msg: '网络异常' })
     })
   })

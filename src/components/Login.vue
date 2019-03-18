@@ -141,8 +141,6 @@ export default {
     },
     onSignup(){
      if(!/^[\w]{3,16}$/.test(this.signup.username)){
-        console.log('用户名必须是字母,数字或者下划线,3-16位')
-        console.log(this.signup.username)
         this.signup.isError = true
         this.signup.notice = '用户名3~15个字符，仅限于字母数字下划线中文'
         return
