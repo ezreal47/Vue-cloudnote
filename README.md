@@ -5,7 +5,7 @@
 ## technology
 
 ``` bash
-Vue + scss + webpack
+Vue + VueRouter + Vuex 
 ```
 
 
